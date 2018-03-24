@@ -58,3 +58,9 @@ var obj2=obj1
 obj1.x=200
 
 console.log(obj2.x)
+
+//问题：如何理解JSON
+
+//JSON是一个js的对象
+
+
