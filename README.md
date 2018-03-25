@@ -454,3 +454,53 @@ var firstLOad=isFirstLoad()
 firstLoad(10) //true
 firstLoad(10) //false
 firstLoad(20) //true
+
+## 异步和单线程
+
+### 什么是异步（对比同步）
+异步
+console.log(100)
+setTImeout(function(){
+  console.log(200)
+},1000)
+console.log(300)
+同步
+console.log(100)
+alert(200)
+console.log(300)
+### 前段使用异步的场景
+定时任务：setTimeout，setInverval
+网络请求：ajax请求，动态<img>加载
+console.log('start')
+$.get('./data1.json',function(data1){
+  console.log(data1)
+})
+console.log('end')
+
+console.log('start')
+var img=document.createElement('img')
+img.onload=function(){
+  console。log('loaded')
+}
+img.src="/xxx.png"
+console.log('end')
+事件绑定
+console.log('start')
+document.createElement('img').onclick=function(){
+    alert('sdads')
+}
+console.log('end')
+### 异步和单线程
+console.log(100)
+setTImeout(function(){
+  console.log(200)
+},1000)
+console.log(300)
+执行第一行，打印100
+执行setTimeout后，传入setTimeout的函数会被暂停存起来不会立即执行（单线程的特点，不能同时干两件事）
+执行最后一行，打印300
+待所有的程序执行完，处于空闲状态时，会立马看有没有暂存起来的要执行
+发现暂存起来的setTimeout中的函数无需等待时间，就立即来过来执行
+### 同步和异步的区别是什么
+同步会阻塞代码执行，而异步不会
+alert是同步，setTimeout是异步 
