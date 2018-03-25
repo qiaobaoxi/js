@@ -326,3 +326,131 @@ Elem.prototype.on=function (type,fn){
 }
 
 var div=new ELem('div')
+
+### 执行上下文
+
+ 范围：一段<script>或者一个函数
+    
+ 全局：变量定义、函数声明
+ 
+ 函数：变量定义、函数声明、this、arguments
+ 
+### this
+
+作为构造函数执行
+
+function Foo(name){
+
+  this.name=name
+  
+  return this
+  
+}
+
+var f = new Foo('zhangsan')
+
+作为对象属性执行
+
+var obj={
+
+  name:'A',
+  
+  pringtName:function(){
+  
+     console.log(this.name)
+     
+  }
+  
+}
+
+作为普通函数执行
+
+function fn(name){
+
+   console.log(this)
+   
+}
+
+ fn('zhangsan')
+ 
+call apply bind
+
+function fn(name){
+
+   console.log(this)
+   
+}
+fn.call({x:100},'zhangsan')
+
+function fn(name){
+
+   console.log(this)
+   
+}
+fn.apply({x:100},['zhangsan','haha'])
+
+var fn1=function (name) {
+
+   console.log(this)
+   
+}.bind({y:200})
+
+### 作用域
+
+//无块级作用域
+
+if(true){
+
+  var name='zhangsan'
+  
+}
+
+console.log(name)
+
+//函数和全局作用域
+
+var a=100
+
+function fn(){
+
+  var a=200
+  
+  console.log('fn',a)
+  
+}
+console.log('gloabal',a)
+### 作用域链
+ var a=100;
+ function fn(){
+    var b=200
+    //当前作用域没有定义的变量，即"自由变量"
+    console.log(a)
+    console.log(b)
+ }
+### 闭包
+这个函数内定义了变量
+全局变量无法修改函数内的变量
+
+### 如何理解作用域 
+
+自由变量
+
+作用域链，即自由变量的查找
+
+闭包的两个场景
+### 闭包世界应用中主要用于封装变量，收敛权限
+function isFirstLoad(){
+  var _list = []
+  return function (id){
+     if(_list.indexOf(id)>=0){
+     return fasle
+     }else{
+        _list.push(id)
+        return true
+     }
+  }
+}
+var firstLOad=isFirstLoad()
+firstLoad(10) //true
+firstLoad(10) //false
+firstLoad(20) //true
